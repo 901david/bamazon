@@ -1,0 +1,26 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "node app that is a knock off Amazon",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/901david/bamazon.git"
+  },
+  "keywords": [
+    "bamazon"
+  ],
+  "author": "DH",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/901david/bamazon/issues"
+  },
+  "homepage": "https://github.com/901david/bamazon#readme",
+  "dependencies": {
+    "inquirer": "^3.2.1",
+    "mysql": "^2.14.0"
+  }
+}
