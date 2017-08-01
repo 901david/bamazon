@@ -1,14 +1,4 @@
-CREATE DATABASE bamazon;
-USE bamazon;
-CREATE TABLE products (
-item_id INTEGER(10) AUTO_INCREMENT NOT NULL,
-product_name VARCHAR(50) NOT NULL,
-department_name VARCHAR(50),
-price INTEGER(10) NOT NULL,
-stock_quantity INTEGER(10),
-product_sales INTEGER(10),
-PRIMARY KEY (item_id)
-)
+
 INSERT INTO products SET product_name='Charcoal Grill', department_name='Appliances', price=100, stock_quantity=20; 
 INSERT INTO products SET product_name='Side By Side Refrigerator', department_name='Appliances', price=800, stock_quantity=45;
 INSERT INTO products SET product_name='Lawnmower', department_name='Appliances', price=250, stock_quantity=12;
@@ -25,7 +15,7 @@ INSERT INTO products SET product_name='Pants', department_name='Clothes', price=
 INSERT INTO products SET product_name='Shoes', department_name='Clothes', price=45, stock_quantity=65;
 
 USE bamazon;
-SELECT * FROM products WHERE item_id=11;
-UPDATE products SET stock_quantity=35 AND product_sales=165 WHERE item_id=11;
 
-UPDATE products SET stock_quantity=35 WHERE item_id=11;
+INSERT INTO departments SET department_name='Clothes', over_head_costs=1200;
+INSERT INTO departments SET department_name='Electronics', over_head_costs=1000;
+INSERT INTO departments SET department_name='Appliances', over_head_costs=800;
