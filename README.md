@@ -15,18 +15,16 @@ Manager interface is reached by executing the bamazonManager.js file through the
 #### View Products for Sale
 In this Manager view the user simply gets a list of the products available for sale with one key distinction from the Customer View -- it shows you the quantity available as well.
 <!-- Add in image of this -->
-
 #### View Low Inventory
 In this Manager view the user is able to see any products that have a quantity less than 5.  This allows a user to determine which products will need to have more stock added to them.
 <!-- Add in image of this -->
-
 #### Add to Inventory
 In this Manager view the user is able to update the *stock* available for any given item.  The prompt will ask which item you would like to update, and then the quantity. Once this has been completed more stock has been added to this item.
 <!-- Insert image here -->
-
 #### Add New products
 In this Manager view the user is able to completely add a new product.  This includes adding the product name, the product department, the product price, and the product stock quantity. Once all appropriate info has been entered the new item is created in the database and is available for purchase by a Customer.
 <!-- Insert image here -->
+
 ### Supervisor Interface
 In the Supervisor view, users are given a list of commands they can execute:
 * View Product Sales by Department
