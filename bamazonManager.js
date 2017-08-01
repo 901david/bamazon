@@ -30,13 +30,19 @@ function addNewProduct () {
     },
     {
       type: "input",
-      name: "stock_quantity",
+      name: "stock_quantity_entered",
       message: "How many do you have?"
     }]).then(function(manageObj) {
-      console.log(manageObj.product_name);
-      console.log(manageObj.department_name);
-      console.log(manageObj.price);
-      console.log(manageObj.product_name);
+
+         let name = manageObj.product_name;
+         let depart = manageObj.department_name;
+         let price = manageObj.price;
+         let quant = manageObj.stock_quantity_entered;
+      connection.query("INSERT INTO products SET product_name=?, department_name=?,price=?,stock_quantity=?",[name, depart,price,quant], function(err, res) {
+        if (err) throw err;
+        console.log("Your item has been added.");
+        managerChoices();
+      });
     });
 };
 function lowProducts () {
@@ -103,8 +109,7 @@ function managerChoices () {
               addInventory();
           break;
           case "Add New Product":
-          // function
-          console.log("Add New Product");
+          addNewProduct();
           break;
       };
 
