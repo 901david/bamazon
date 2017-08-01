@@ -11,6 +11,70 @@ var connection = mysql.createConnection({
   password: "4984",
   database: "bamazon"
 });
+function addNewProduct () {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "product_name",
+      message: "What is the product you would like to add?"
+    },
+    {
+      type: "input",
+      name: "department_name",
+      message: "What department would you place this under?"
+    },
+    {
+      type: "input",
+      name: "price",
+      message: "What is the price?"
+    },
+    {
+      type: "input",
+      name: "stock_quantity",
+      message: "How many do you have?"
+    }]).then(function(manageObj) {
+      console.log(manageObj.product_name);
+      console.log(manageObj.department_name);
+      console.log(manageObj.price);
+      console.log(manageObj.product_name);
+    });
+};
+function lowProducts () {
+  connection.query("SELECT * FROM products WHERE stock_quantity < 5", function(err, res) {
+    if (err) throw err;
+    // console.log(res);
+    for (let i = 0; i < res.length; i++) {
+      console.log("ID: " + res[i].item_id + " Product: " + res[i].product_name + " Cost: $" + res[i].price + " Stock: " + res[i].stock_quantity);
+    }
+});
+};
+function addInventory () {
+whatDoWeHave();
+inquirer.prompt([
+  {
+    type: "input",
+    name: "manageChoiceToEdit",
+    message: "Which item do you want to add stock to?"
+  },
+  {
+    type: "input",
+    name: "manageChoiceToAdd",
+    message: "How much do you want to add?"
+  }]).then(function(manageObj) {
+    let currentStock;
+    connection.query("SELECT * FROM products WHERE item_id=?",[manageObj.manageChoiceToEdit], function(err, res) {
+      if (err) throw err;
+      currentStock = res[0].stock_quantity;
+      console.log(currentStock);
+      let newStock = parseInt(manageObj.manageChoiceToAdd) + currentStock;
+      connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?",[newStock, manageObj.manageChoiceToEdit], function(err, res) {
+        if (err) throw err;
+        console.log("Quantity has been updated.");
+        managerChoices();
+    });
+  });
+  });
+};
 function whatDoWeHave () {
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
@@ -33,12 +97,10 @@ function managerChoices () {
               whatDoWeHave();
             break;
           case "View Low Inventory":
-          // function
-          console.log("View Low Inventory");
+              lowProducts();
           break;
           case "Add to Inventory":
-          // function
-          console.log("Add to Inventory");
+              addInventory();
           break;
           case "Add New Product":
           // function
