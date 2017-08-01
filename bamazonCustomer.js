@@ -1,5 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var userPurchaseItem;
+var userPurchaseNumber;
 var connection = mysql.createConnection({
   host: "127.0.0.1",
   port: 3306,
@@ -11,14 +13,35 @@ var connection = mysql.createConnection({
   password: "4984",
   database: "bamazon"
 });
+// Determines if we have enough to purchase and purchases it if so
+function canYouBuyThis (itemNumArg, itemIDArg) {
+  connection.query("SELECT * FROM products WHERE item_id=? ",[itemIDArg], function(err, res) {
+    if (err) throw err;
+    // console.log(res);
+    if (itemNumArg <= res[0].stock_quantity) {
+      let totalBillAmount = itemNumArg * res[0].price;
+      let newStock = res[0].stock_quantity - itemNumArg;
+      console.log("Your purchase has gone through.  The total bill was: $" + totalBillAmount);
+      connection.query("UPDATE products SET stock_quantity=?, product_sales=? WHERE item_id=?",[newStock, totalBillAmount, itemIDArg], function(err, res) {
+        if (err) throw err;
+        // console.log(res);
+        setTimeout(()=>{whatCanWeBuy()}, 1000);
+      });
+    }
+    else {
+      console.log("Not enough stock to fulfill your order.  Please try a different product OR purchase less.");
+      whatCanWeBuy();
+    }
+});
+};
 // Shows the user what items are available
 function whatCanWeBuy () {
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
-    console.log(res);
+    // console.log(res);
     for (let i = 0; i < res.length; i++) {
       console.log("ID: " + res[i].item_id + " Product: " + res[i].product_name + "Cost: $" + res[i].price);
-    }
+    };
     inquirer.prompt([
       {
         type: "input",
@@ -35,6 +58,7 @@ function whatCanWeBuy () {
               userPurchaseNumber=numberObj.number;
               // Call a function here that checks if there are that many if so "sells" it and then updates teh database
               console.log(userPurchaseItem + " " + userPurchaseNumber);
+              canYouBuyThis(userPurchaseNumber, userPurchaseItem);
             });
 
       });
@@ -43,6 +67,5 @@ function whatCanWeBuy () {
 
 connection.connect(function(err) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId);
   whatCanWeBuy();
 });

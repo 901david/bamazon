@@ -24,3 +24,8 @@ INSERT INTO products SET product_name='Hat', department_name='Clothes', price=15
 INSERT INTO products SET product_name='Pants', department_name='Clothes', price=25, stock_quantity=35;
 INSERT INTO products SET product_name='Shoes', department_name='Clothes', price=45, stock_quantity=65;
 
+USE bamazon;
+SELECT * FROM products WHERE item_id=11;
+UPDATE products SET stock_quantity=35 AND product_sales=165 WHERE item_id=11;
+
+UPDATE products SET stock_quantity=35 WHERE item_id=11;
