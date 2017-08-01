@@ -3,7 +3,8 @@ This is a storefront Node App that allows you to use three separate interfaces:
 
 ### Customer Interface
 Customer interface is reached by executing the bamazonCustomer.js file through the Node terminal. When the customer "logs" in they are given a list of all available items for purchase based on the Item Id listed next to it.  The user is prompted for which item they wish to purchase and how much of that item they would like to purchase. At the conclusion of this they are told how much their purchase cost total and then are allowed to purchase additional items.
-<!-- Insert two images one of customer interface and one once you have purchased -->
+![GitHub Logo](/readmeimages/shot1.jpg)
+
 
 ### Manager Interface
 Manager interface is reached by executing the bamazonManager.js file through the Node terminal.  When the manager "logs" in they are given a list of commands they can execute:
