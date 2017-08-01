@@ -27,20 +27,14 @@ function viewDepartmentSales() {
       let departSalesSum = res[i]['SUM(product_sales)'];
       let departOverHead = res[i].over_head_costs.toString();
       let departProfits = res[i].total_profit.toString();
-      console.log(departId);
-      console.log(departName);
-      console.log(departSalesSum);
-      console.log(departOverHead);
-      console.log(departProfits);
       table.push(
           [departId, departName, departSalesSum, departOverHead, departProfits]
-
       );
-        console.log(table.toString());
     }
-
+        console.log(table.toString());
+        setTimeout(()=>{supervisorChoices();});
 });
-// console.log(table.toString());
+
 };
 function youDone() {
 inquirer.prompt([

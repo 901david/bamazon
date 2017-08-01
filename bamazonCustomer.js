@@ -17,14 +17,12 @@ var connection = mysql.createConnection({
 function canYouBuyThis (itemNumArg, itemIDArg) {
   connection.query("SELECT * FROM products WHERE item_id=? ",[itemIDArg], function(err, res) {
     if (err) throw err;
-    // console.log(res);
     if (itemNumArg <= res[0].stock_quantity) {
       let totalBillAmount = itemNumArg * res[0].price;
       let newStock = res[0].stock_quantity - itemNumArg;
       console.log("Your purchase has gone through.  The total bill was: $" + totalBillAmount);
       connection.query("UPDATE products SET stock_quantity=?, product_sales=? WHERE item_id=?",[newStock, totalBillAmount, itemIDArg], function(err, res) {
         if (err) throw err;
-        // console.log(res);
         setTimeout(()=>{whatCanWeBuy()}, 1000);
       });
     }
@@ -56,8 +54,6 @@ function whatCanWeBuy () {
               message: "How many do you wish to purchase?"
             }]).then(function(numberObj) {
               userPurchaseNumber=numberObj.number;
-              // Call a function here that checks if there are that many if so "sells" it and then updates teh database
-              console.log(userPurchaseItem + " " + userPurchaseNumber);
               canYouBuyThis(userPurchaseNumber, userPurchaseItem);
             });
 
