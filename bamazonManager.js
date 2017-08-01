@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var userChoice;
 var connection = mysql.createConnection({
   host: "127.0.0.1",
   port: 3306,
@@ -52,6 +53,7 @@ function lowProducts () {
     for (let i = 0; i < res.length; i++) {
       console.log("ID: " + res[i].item_id + " Product: " + res[i].product_name + " Cost: $" + res[i].price + " Stock: " + res[i].stock_quantity);
     }
+    youDone();
 });
 };
 function addInventory () {
@@ -71,7 +73,6 @@ inquirer.prompt([
     connection.query("SELECT * FROM products WHERE item_id=?",[manageObj.manageChoiceToEdit], function(err, res) {
       if (err) throw err;
       currentStock = res[0].stock_quantity;
-      console.log(currentStock);
       let newStock = parseInt(manageObj.manageChoiceToAdd) + currentStock;
       connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?",[newStock, manageObj.manageChoiceToEdit], function(err, res) {
         if (err) throw err;
@@ -81,6 +82,26 @@ inquirer.prompt([
   });
   });
 };
+function youDone() {
+inquirer.prompt([
+  {
+    type: "confirmm",
+    name: "moveOn",
+    message: "Are you done Reviewing? (y/n)"
+  }]).then(function(ansObj) {
+      if (ansObj.moveOn === 'y') {
+        managerChoices();
+      }
+      else if (ansObj.moveOn === 'n') {
+          youDone();
+      }
+      else {
+        console.log("Not valid input");
+        youDone();
+      }
+    });
+
+};
 function whatDoWeHave () {
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
@@ -88,6 +109,10 @@ function whatDoWeHave () {
     for (let i = 0; i < res.length; i++) {
       console.log("ID: " + res[i].item_id + " Product: " + res[i].product_name + " Cost: $" + res[i].price + " Stock: " + res[i].stock_quantity);
     }
+      if (userChoice === "View Products for Sale") {
+        youDone();
+      }
+
 });
 };
 function managerChoices () {
@@ -98,7 +123,8 @@ function managerChoices () {
       message: "What would you like to do?",
       choices: ["View Products for Sale","View Low Inventory", "Add to Inventory","Add New Product"]
     }]).then(function(choiceObj) {
-      switch (choiceObj.manageChoice) {
+      userChoice = choiceObj.manageChoice;
+      switch (userChoice) {
         case "View Products for Sale":
               whatDoWeHave();
             break;

@@ -3,8 +3,8 @@ var inquirer = require("inquirer");
 var Table = require('cli-table');
 // instantiate
 var table = new Table({
-head: ['Department ID', 'Department Name', 'Department Total Sales', 'Dep. Over Head', 'Total Profit']
-, colWidths: [25, 25, 25, 25, 25,]
+head: ['Department ID', 'Department Name', 'Dep. Total Sales', 'Dep. Over Head', 'Total Profit']
+, colWidths: [20, 20, 20, 20, 20]
 });
 var connection = mysql.createConnection({
   host: "127.0.0.1",
@@ -18,17 +18,49 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 function viewDepartmentSales() {
-  connection.query("SELECT    departments.department_id, departments.department_name, departments.over_head_costs, SUM(product_sales), (SUM(product_sales) - over_head_costs) AS total_profit FROM departments INNER JOIN products ON (departments.department_name = products.department_name) GROUP BY department_name;", function(err, res) {
+  connection.query("SELECT departments.department_id, departments.department_name, departments.over_head_costs, SUM(product_sales), (SUM(product_sales) - over_head_costs) AS total_profit FROM departments INNER JOIN products ON (departments.department_name = products.department_name) GROUP BY department_id", function(err, res) {
     if (err) throw err;
-    console.log(res);
+    // console.log(res);
+    for (let i = 0; i < res.length; i++) {
+      let departId = res[i].department_id.toString();
+      let departName = res[i].department_name.toString();
+      let departSalesSum = res[i]['SUM(product_sales)'];
+      let departOverHead = res[i].over_head_costs.toString();
+      let departProfits = res[i].total_profit.toString();
+      console.log(departId);
+      console.log(departName);
+      console.log(departSalesSum);
+      console.log(departOverHead);
+      console.log(departProfits);
+      table.push(
+          [departId, departName, departSalesSum, departOverHead, departProfits]
 
-table.push(
-    ['First value', 'Second value','Second value','Second value','Second value']
-  , ['First value', 'Second value','Second value','Second value','Second value']
-);
+      );
+        console.log(table.toString());
+    }
 
-console.log(table.toString());
 });
+// console.log(table.toString());
+};
+function youDone() {
+inquirer.prompt([
+  {
+    type: "confirmm",
+    name: "moveOn",
+    message: "Are you done looking at the information? (y/n)"
+  }]).then(function(ansObj) {
+      if (ansObj.moveOn === 'y') {
+        supervisorChoices();
+      }
+      else if (ansObj.moveOn === 'n') {
+          youDone();
+      }
+      else {
+        console.log("Not valid input");
+        youDone();
+      }
+    });
+
 };
 function createDepartment() {
   inquirer.prompt([
@@ -47,6 +79,7 @@ function createDepartment() {
         connection.query("INSERT INTO departments SET department_name=?, over_head_costs=?",[departName, departCosts], function(err, res) {
           if (err) throw err;
           console.log("Your department has been added");
+          supervisorChoices();
       });
     });
 };

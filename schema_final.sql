@@ -6,7 +6,7 @@ product_name VARCHAR(50) NOT NULL,
 department_name VARCHAR(50),
 price INTEGER(10) NOT NULL,
 stock_quantity INTEGER(10),
-product_sales INTEGER(10),
+product_sales INTEGER(10) NOT NULL DEFAULT 0,
 PRIMARY KEY (item_id)
 )
 CREATE TABLE departments (
