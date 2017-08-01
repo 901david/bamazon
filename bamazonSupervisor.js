@@ -1,5 +1,11 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var Table = require('cli-table');
+// instantiate
+var table = new Table({
+head: ['Department ID', 'Department Name', 'Department Total Sales', 'Dep. Over Head', 'Total Profit']
+, colWidths: [25, 25, 25, 25, 25,]
+});
 var connection = mysql.createConnection({
   host: "127.0.0.1",
   port: 3306,
@@ -11,6 +17,19 @@ var connection = mysql.createConnection({
   password: "4984",
   database: "bamazon"
 });
+function viewDepartmentSales() {
+  connection.query("SELECT    departments.department_id, departments.department_name, departments.over_head_costs, SUM(product_sales), (SUM(product_sales) - over_head_costs) AS total_profit FROM departments INNER JOIN products ON (departments.department_name = products.department_name) GROUP BY department_name;", function(err, res) {
+    if (err) throw err;
+    console.log(res);
+
+table.push(
+    ['First value', 'Second value','Second value','Second value','Second value']
+  , ['First value', 'Second value','Second value','Second value','Second value']
+);
+
+console.log(table.toString());
+});
+};
 function createDepartment() {
   inquirer.prompt([
     {
@@ -41,7 +60,7 @@ function supervisorChoices() {
     }]).then(function(choiceObj) {
       switch (choiceObj.superviseChoice) {
         case "View Product Sales by Department":
-              console.log("View Product Sales by Department");
+              viewDepartmentSales();
             break;
           case "Create New Department":
               createDepartment();

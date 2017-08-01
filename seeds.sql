@@ -19,3 +19,23 @@ USE bamazon;
 INSERT INTO departments SET department_name='Clothes', over_head_costs=1200;
 INSERT INTO departments SET department_name='Electronics', over_head_costs=1000;
 INSERT INTO departments SET department_name='Appliances', over_head_costs=800;
+SELECT * FROM departments;
+
+SELECT *
+FROM departments
+LEFT JOIN products ON departments.department_name = products.department_name;
+
+SELECT    departments.department_id, departments.department_name, departments.over_head_costs, (product_sales - over_head_costs) AS total_profit
+FROM      departments
+INNER JOIN products ON (departments.department_name = products.department_name);
+
+
+
+SELECT    departments.department_id, departments.department_name, departments.over_head_costs, SUM(product_sales), (SUM(product_sales) - over_head_costs) AS total_profit
+FROM      departments
+INNER JOIN products ON (departments.department_name = products.department_name) GROUP BY department_name;
+
+
+SELECT department_name, SUM(product_sales) AS total_department_sales FROM products GROUP BY department_name;
+
+
