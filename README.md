@@ -40,4 +40,4 @@ In this Supervisor view the user is able to create new departments.  These depar
 
 ### Demo of App
 Please use the below Vimeo link to access a short demonstration of how this app function.
-<!-- Place link here -->
+[Bamazon Walk Through](https://vimeo.com/228489772)
