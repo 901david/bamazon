@@ -38,7 +38,7 @@ function whatCanWeBuy () {
     if (err) throw err;
     // console.log(res);
     for (let i = 0; i < res.length; i++) {
-      console.log("ID: " + res[i].item_id + " Product: " + res[i].product_name + "Cost: $" + res[i].price);
+      console.log("ID: " + res[i].item_id + " Product: " + res[i].product_name + " Cost: $" + res[i].price);
     };
     inquirer.prompt([
       {
