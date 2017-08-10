@@ -41,3 +41,5 @@ In this Supervisor view the user is able to create new departments.  These depar
 ### Demo of App
 Please use the below Vimeo link to access a short demonstration of how this app function.
 [Bamazon Walk Through](https://vimeo.com/228489772)
+
+Please Note:  If you were to fork this app and use it on your own you would need to enter in teh password and switch out the information for YOUR MySQL Database.

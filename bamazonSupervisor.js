@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var Table = require('cli-table');
+var superHidden = require("./key.js");
 // instantiate
 var table = new Table({
 head: ['Department ID', 'Department Name', 'Dep. Total Sales', 'Dep. Over Head', 'Total Profit']
@@ -14,7 +15,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "4984",
+  password: superHidden,
   database: "bamazon"
 });
 function viewDepartmentSales() {

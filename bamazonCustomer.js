@@ -2,6 +2,7 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 var userPurchaseItem;
 var userPurchaseNumber;
+var superHidden = require("./key.js");
 var connection = mysql.createConnection({
   host: "127.0.0.1",
   port: 3306,
@@ -10,7 +11,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "4984",
+  password: superHidden,
   database: "bamazon"
 });
 // Determines if we have enough to purchase and purchases it if so
