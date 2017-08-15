@@ -1,18 +1,7 @@
-var mysql = require("mysql");
+
 var inquirer = require("inquirer");
 var userChoice;
-var superHidden = require("./key.js");
-var connection = mysql.createConnection({
-  host: "127.0.0.1",
-  port: 3306,
-
-  // Your username
-  user: "root",
-
-  // Your password
-  password: superHidden,
-  database: "bamazon"
-});
+var connection = require("./connection.js");
 function addNewProduct () {
   inquirer.prompt([
     {

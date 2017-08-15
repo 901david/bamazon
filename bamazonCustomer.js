@@ -1,19 +1,8 @@
-var mysql = require("mysql");
+
 var inquirer = require("inquirer");
 var userPurchaseItem;
 var userPurchaseNumber;
-var superHidden = require("./key.js");
-var connection = mysql.createConnection({
-  host: "127.0.0.1",
-  port: 3306,
-
-  // Your username
-  user: "root",
-
-  // Your password
-  password: superHidden,
-  database: "bamazon"
-});
+var connection = require("./connection.js");
 // Determines if we have enough to purchase and purchases it if so
 function canYouBuyThis (itemNumArg, itemIDArg) {
   connection.query("SELECT * FROM products WHERE item_id=? ",[itemIDArg], function(err, res) {
