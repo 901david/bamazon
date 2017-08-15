@@ -1,7 +1,5 @@
 
 var inquirer = require("inquirer");
-var userPurchaseItem;
-var userPurchaseNumber;
 var connection = require("./connection.js");
 // Determines if we have enough to purchase and purchases it if so
 function canYouBuyThis (itemNumArg, itemIDArg) {
@@ -24,9 +22,10 @@ function canYouBuyThis (itemNumArg, itemIDArg) {
 };
 // Shows the user what items are available
 function whatCanWeBuy () {
+  let userPurchaseItem;
+  let userPurchaseNumber;
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
-    // console.log(res);
     for (let i = 0; i < res.length; i++) {
       console.log("ID: " + res[i].item_id + " Product: " + res[i].product_name + " Cost: $" + res[i].price);
     };
@@ -52,6 +51,8 @@ function whatCanWeBuy () {
 };
 
 connection.connect(function(err) {
-  if (err) throw err;
+  if (err) {
+    throw err
+  };
   whatCanWeBuy();
 });
